@@ -1,0 +1,79 @@
+services:
+  ch01:
+    container_name: ch01
+    hostname: ch01
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./.data/ch01:/var/lib/clickhouse
+      - ./config/config.yaml:/etc/clickhouse-server/config.d/config.yaml
+      - ./config/keeper.yaml:/etc/clickhouse-server/config.d/keeper.yaml
+      - ./config/users.yaml:/etc/clickhouse-server/users.d/users.yaml
+      - ./config/user_defined_function.yaml:/etc/clickhouse-server/user_defined_function.yaml
+    environment:
+      - SHARD=1
+      - REPLICA=ch01
+      - KEEPER_ID=1
+      - S3_USER
+      - S3_PASS
+    ports:
+      - 9000:9000
+      - 8123:8123
+      - 9181:9181
+    cap_add:
+      - CAP_SYS_NICE
+  ch02:
+    container_name: ch02
+    hostname: ch02
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./.data/ch02:/var/lib/clickhouse
+      - ./config/config.yaml:/etc/clickhouse-server/config.d/config.yaml
+      - ./config/keeper.yaml:/etc/clickhouse-server/config.d/keeper.yaml
+      - ./config/users.yaml:/etc/clickhouse-server/users.d/users.yaml
+      - ./config/user_defined_function.yaml:/etc/clickhouse-server/user_defined_function.yaml
+    environment:
+      - SHARD=1
+      - REPLICA=ch02
+      - KEEPER_ID=2
+      - S3_USER
+      - S3_PASS
+    cap_add:
+      - CAP_SYS_NICE
+  ch03:
+    container_name: ch03
+    hostname: ch03
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./.data/ch03:/var/lib/clickhouse
+      - ./config/config.yaml:/etc/clickhouse-server/config.d/config.yaml
+      - ./config/keeper.yaml:/etc/clickhouse-server/config.d/keeper.yaml
+      - ./config/users.yaml:/etc/clickhouse-server/users.d/users.yaml
+      - ./config/user_defined_function.yaml:/etc/clickhouse-server/user_defined_function.yaml
+    environment:
+      - SHARD=2
+      - REPLICA=ch03
+      - KEEPER_ID=3
+      - S3_USER
+      - S3_PASS
+    cap_add:
+      - CAP_SYS_NICE
+  ch04:
+    container_name: ch04
+    hostname: ch04
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./.data/ch04:/var/lib/clickhouse
+      - ./config/config.yaml:/etc/clickhouse-server/config.d/config.yaml
+      - ./config/users.yaml:/etc/clickhouse-server/users.d/users.yaml
+      - ./config/user_defined_function.yaml:/etc/clickhouse-server/user_defined_function.yaml
+    environment:
+      - SHARD=2
+      - REPLICA=ch04
+      - S3_USER
+      - S3_PASS
+    cap_add:
+      - CAP_SYS_NICE

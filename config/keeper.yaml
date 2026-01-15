@@ -1,0 +1,21 @@
+keeper_server:
+  tcp_port: "9181"
+  server_id:
+    "@from_env": KEEPER_ID
+  log_storage_path: /var/lib/clickhouse/coordination/log
+  snapshot_storage_path: /var/lib/clickhouse/coordination/snapshots
+  coordination_settings:
+    operation_timeout_ms: "10000"
+    session_timeout_ms: "30000"
+    raft_logs_level: information
+  raft_configuration:
+    server:
+      - id: "1"
+        hostname: ch01
+        port: "9234"
+      - id: "2"
+        hostname: ch02
+        port: "9234"
+      - id: "3"
+        hostname: ch03
+        port: "9234"

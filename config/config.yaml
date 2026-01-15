@@ -1,0 +1,45 @@
+"@replace": replace
+default_database: default
+default_replica_name: "{replica}"
+default_replica_path: "/clickhouse/tables/{shard}/{database}/{table}"
+https_port: "8443"
+tcp_port: "9000"
+max_server_memory_usage_to_ram_ratio: "0.2"
+logger:
+  level: information
+  console: "1"
+macros:
+  cluster: primary
+  shard:
+    "@from_env": SHARD
+  replica:
+    "@from_env": REPLICA
+remote_servers:
+  primary:
+    secret: secretfordistributedqueries
+    shard:
+      - internal_replication: "true"
+        replica:
+          - host: ch01
+            port: "9000"
+          - host: ch02
+            port: "9000"
+      - internal_replication: "true"
+        replica:
+          - host: ch03
+            port: "9000"
+          - host: ch04
+            port: "9000"
+zookeeper:
+  node:
+    - host: ch01
+      port: "9181"
+      "@index": "1"
+    - host: ch02
+      port: "9181"
+      "@index": "2"
+    - host: ch03
+      port: "9181"
+      "@index": "3"
+user_scripts_path: /opt/clickhouse/user_scripts/
+user_defined_executable_functions_config: "*_function.yaml"

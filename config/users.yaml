@@ -1,0 +1,24 @@
+profiles:
+  default:
+    load_balancing: random
+  readonly:
+    readonly: "1"
+users:
+  default:
+    "@remove": "true"
+  admin:
+    password: pass4admin
+    networks:
+      ip: "::/0"
+    profile: default
+    quota: default
+    access_management: "1"
+    named_collection_control: "1"
+    show_named_collections: "1"
+    show_named_collections_secrets: "1"
+  readonly:
+    password: pass4readonly
+    networks:
+      ip: "::/0"
+    profile: readonly
+    quota: default

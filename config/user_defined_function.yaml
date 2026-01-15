@@ -1,0 +1,18 @@
+functions:
+  - name: test_function_python
+    type: executable
+    return_type: String
+    argument:
+      type: String
+    format: TabSeparated
+    command: test_function.py
+    execute_direct: 1
+  - name: test_function_cpp
+    type: executable
+    return_type: String
+    argument:
+      type: String
+      name: value
+    format: TabSeparated
+    command: test_function
+    execute_direct: 1
